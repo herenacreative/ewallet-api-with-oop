@@ -34,10 +34,8 @@ class ErrorHandler {
 class AuthMiddleware {
     verifyJwtToken(req, res, next) {
         const token = req.headers.authorization;
-        // console.log(token);
         try {
             const decoded = jwt.verify(token, config.jwtSecretKey);
-            // console.log(decoded);
             if (decoded.tokenType !== 'login') {
                 const message = {
                     error: 'Wrong Token',
@@ -53,9 +51,35 @@ class AuthMiddleware {
         }
     }
 
+    // checkRole = (roles) => (req, res, next) => {
+    //     try {
+    //         const role = req.decodedToken.role;
+    //         if (roles.find(element => element === role)) {
+    //             if(role == 3){
+    //                 console.log(req.decodedToken.id , 'hhh', req.params.sender_id)
+    //                 const id = req.params.sender_id
+    //                 if (req.decodedToken.id != id){
+    //                     return new Response(res, null, 'you dont have access', 500, 'failed')
+    //                 }
+    //                 next()
+    //             }
+    //             else{
+    //                 next()
+    //             }
+    //         } else {
+    //             return new Response(res, null, 'you dont have access', 500, 'failed')
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         const message = `Internal Server Error`;
+    //         return new Response(res, null, message, 500, 'failed')
+    //     }
+    // }
+
     checkRole = (roles) => (req,res,next) => {
         try {
             const role = req.decodedToken.role;
+            console.log(role)
             if (roles.find(element => element === role)) {
                 next();
             } else {

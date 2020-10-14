@@ -11,6 +11,8 @@ Before you begin, ensure you have met the following requirements:
 * Node.js
 * Express.js
 * MySQL
+* JWT
+* Bcrypt
 
 ## Installing Saku Saku
 
@@ -25,7 +27,7 @@ start the sever :
 * run this command npm start to start the server.
 * Make sure there are no other processes that use port 8080 
 * Open postman create ENV http://localhost:8080/redwallet/api/v1
-* Run app with api testing {{API_URI}}/transaction/1
+* Run app with api testing {{API_URI}}/auth/register
 ```
 
 ## Contact

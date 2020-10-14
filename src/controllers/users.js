@@ -9,7 +9,8 @@ class UsersController {
     }
 
     async getAllUser(req, res) {
-        const search = req.query.search || ''
+        let tolower = req.query.search || ''
+        const search = tolower.toLowerCase()
         const sortBy = req.query.sortBy || 'fullname'
         const sortType = req.query.sortType || 'asc'
         const limit = parseInt(req.query.limit) || 7
@@ -45,15 +46,18 @@ class UsersController {
 
     async patchUser(req, res) {
         const id = req.params.id
-        const setData = req.body
-        // if (!setData.photo) {
-        setData.photo = req.file ? req.file.filename : setData.photo;
-        // }
-        console.log(req)
+        const setData = {...req.body}
+        if (req.file) {
+            setData.photo = req.file.filename
+        }
+        
+        setData.updated_at = new Date()
         try {
             const checkId = await UsersModel.getIdUserModel(id)
             if (checkId.length > 0) {
-                // setData.password = hashPassword(setData.password);
+                if (setData.password) {
+                    setData.password = hashPassword(setData.password);
+                }
                 const result = await UsersModel.patchUserModel(setData, id)
                 return new Response(res, result, `Success Update User ID ${id}`, 201, 'success')
             }
