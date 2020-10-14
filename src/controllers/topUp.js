@@ -16,7 +16,10 @@ class TopUpController {
         const id = req.params.id
         try {
             const result = await TopUpModel.getIdTopUpModel(id);
-            return new Response(res, result, `Success Get All Top Up Data ID ${id}`, 200, 'success')
+            if (result.length == 1) {
+                return new Response(res, result, `Success Get All Top Up Data ID ${id}`, 200, 'success')
+            }
+            return new Response(res, null, `Data Not Found`, 404, 'failed')
         } catch (error) {
             console.log(error);
             return new Response(res, null, 'internal Server Error', 500, 'failed')
@@ -55,8 +58,12 @@ class TopUpController {
     async deleteTopUp(req,res){
         const id = req.params.id
         try {
-            const result = await TopUpModel.deleteTopUpModel(id);
-            return new Response(res, result, `Success Delete Top Up Data ID ${id}`, 200, 'success')
+            const checkId = await TopUpModel.getIdTopUpModel(id)
+            if (checkId.length > 0) {
+                const result = await TopUpModel.deleteTopUpModel(id)
+                return new Response(res, result, `Success Delete Top Up Data ID ${id}`, 201, 'success')
+            }
+            return new Response(res, null, `Data Not Found`, 404, 'failed')
         } catch (error) {
             console.log(error);
             return new Response(res, null, 'internal Server Error', 500, 'failed')

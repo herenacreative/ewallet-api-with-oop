@@ -35,8 +35,8 @@ class Upload {
             if (mimeTypes.find(item => item === file.mimetype)) {
                 cb(null, true);
             } else {
-                req.uploadError = true;
                 // reject files
+                req.uploadError = true;
                 cb(null, false);
             }
         }

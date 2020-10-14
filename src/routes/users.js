@@ -1,7 +1,9 @@
 import express from 'express';
-import topUpController from '../controllers/topUp';
+import usersController from '../controllers/users';
+import upload from '../helpers/upload';
 import AuthMiddleware from '../middlewares/auth';
-class TopUpRouter{
+
+class UsersRouter{
     router;
     auth;
 
@@ -15,34 +17,29 @@ class TopUpRouter{
         this.router.get(
             '/', 
             (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
-            (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next), 
-            topUpController.getAllTopUp
+            (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next),
+            usersController.getAllUser
         )
         this.router.get(
             '/:id', 
             (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
             (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next),
-            topUpController.getIdTopUp
+            usersController.getIdUser
         )
-        this.router.post(
-            '/', 
-            (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
-            (req, res, next) => this.auth.checkRole([1,2])(req, res, next), 
-            topUpController.postTopUp
-            )
         this.router.patch(
             '/:id', 
+            upload.single('photo'), 
             (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
-            (req, res, next) => this.auth.checkRole([1,2])(req, res, next),
-            topUpController.patchTopUp
+            (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next),
+            usersController.patchUser
         )
         this.router.delete(
             '/:id', 
             (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
             (req, res, next) => this.auth.checkRole([1,2])(req, res, next),
-            topUpController.deleteTopUp
+            usersController.deleteUser
         )
     }
 }
 
-export default new TopUpRouter().router;
+export default new UsersRouter().router;

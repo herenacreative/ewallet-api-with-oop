@@ -12,8 +12,8 @@ export const comparePassword = (password1, password2) => {
     return bcrypt.compareSync(password1, password2)
 }
 
-export const createToken = function(payload, expire = null) {
-    console.log(payload)
+export const createToken = function(payload, expire) {
+    console.log(expire)
     if (expire) {
         return jwt.sign(payload, config.jwtSecretKey, expire)
     };

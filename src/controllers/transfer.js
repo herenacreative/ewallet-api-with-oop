@@ -2,22 +2,30 @@ import Response from "../helpers/response";
 import transferModel from '../models/transfer';
 
 class TransferController{
-    async getIdTransfer(req,res){
-        const id = req.params.id
-        try {
-            const result = await transferModel.getIdTransferModel(id);
-            return new Response(res, result, `Success Get All Transfer Data ID ${id}`, 200, 'success')
-        } catch (error) {
-            console.log(error);
-            return new Response(res, null, 'internal Server Error', 500, 'failed')
-        }
-    }
+    // async getIdTransfer(req,res){
+    //     const id = req.params.id
+    //     try {
+    //         const result = await transferModel.getIdTransferModel(id);
+    //         return new Response(res, result, `Success Get All Transfer Data ID ${id}`, 200, 'success')
+    //     } catch (error) {
+    //         console.log(error);
+    //         return new Response(res, null, 'internal Server Error', 500, 'failed')
+    //     }
+    // }
 
     async getAllTransfer(req,res){
         const sender_id = req.params.sender_id;
+        const sortBy = req.query.sortBy || 'created_at'
+        const sortType = req.query.sortType || 'desc'
+        const limit = parseInt(req.query.limit) || 4
+        const page = parseInt(req.query.page) || 1
+        
         try {
-            const result = await transferModel.getAllTransferModel(sender_id);
-            return new Response(res, result, `Success Get All Transfer Data User ${sender_id}`, 200, 'success')
+            const checkData = await transferModel.getAllTransferModel(sender_id, sortBy, sortType, limit, page);
+            if (checkData.length > 0) {
+                return new Response(res, checkData, `Success Delete User Data ID ${sender_id}`, 200, 'success')
+            }
+            return new Response(res, null, `Data Empty`, 200, 'success')
         } catch (error) {
             console.log(error);
             return new Response(res, null, 'internal Server Error', 500, 'failed')
@@ -56,8 +64,14 @@ class TransferController{
     async deleteTransfer(req,res){
         const id = req.params.id
         try {
-            const result = await transferModel.deleteTransferModel(id)
-            return new Response(res, result, `Success Delete Top Up Data ID ${id}`, 200, 'success')
+            const checkId = await transferModel.getIdTransferModel(id)
+            if (checkId.length > 0) {
+                const result = await transferModel.deleteTransferModel(id)
+                return new Response(res, result, `Success Delete Transfer Data ID ${id}`, 201, 'success')
+            }
+            return new Response(res, null, `Data Not Found`, 404, 'failed')
+            // const result = await transferModel.deleteTransferModel(id)
+            // return new Response(res, result, `Success Delete Top Up Data ID ${id}`, 200, 'success')
         } catch (error) {
             console.log(error)
             return new Response(res, null, 'internal Server Error', 500, 'failed')

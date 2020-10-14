@@ -31,7 +31,11 @@ class TopUpModel {
                 if (error) {
                     reject(error)
                 }
-                resolve(result)
+                const newData = {
+                    id: result.insertId,
+                    ...setData,
+                };
+                resolve(newData);
             })
         })
     }
@@ -43,8 +47,11 @@ class TopUpModel {
                 if (err) {
                     reject(err)
                 }
-                resolve(result)
-                
+                const newData = {
+                    id: result.insertId,
+                    ...setData,
+                };
+                resolve(newData);
             })
         })
     }
