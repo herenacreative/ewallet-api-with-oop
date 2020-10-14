@@ -2,7 +2,7 @@
 
 [Demo API from Postman!](https://documenter.getpostman.com/view/9237457/TVRdABd2#efd0b853-8ad2-4cd7-9310-46760f7b6e9f "Demo API from Postman!") 
 or
-[Demo API from AWS!](http://54.85.133.10/saku-saku/api/v1 "Demo API from AWS!")
+[Demo API from AWS!](http://54.85.133.10/saku-saku/api/v1/users/ "Demo API from AWS!")
 
 
 Saku-saku is a application is an electronic device, which allows users to make online transactions with other users to buy goods and service.
