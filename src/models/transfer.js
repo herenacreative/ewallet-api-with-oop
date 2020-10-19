@@ -35,7 +35,7 @@ class TransferModel{
                     reject(error)
                 }
                 const newData = {
-                    id: result.insertId,
+                    id: result,
                     ...setData,
                 };
                 resolve(newData);
