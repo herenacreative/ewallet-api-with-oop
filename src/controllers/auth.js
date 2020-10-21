@@ -44,7 +44,7 @@ class AuthController {
     async register(req, res) {
         try {
             const body = req.body;
-            body.role = 3;
+            body.role = req.body.role || 3;
             body.pin = req.body.pin || 0;
             body.phone = req.body.phone || '-';
             body.verify = req.body.verify || 0;

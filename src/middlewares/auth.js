@@ -79,7 +79,6 @@ class AuthMiddleware {
     checkRole = (roles) => (req,res,next) => {
         try {
             const role = req.decodedToken.role;
-            console.log(role)
             if (roles.find(element => element === role)) {
                 next();
             } else {

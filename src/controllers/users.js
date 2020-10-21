@@ -9,11 +9,11 @@ class UsersController {
     }
 
     async getAllUser(req, res) {
-        let tolower = req.query.search || ''
-        const search = tolower.toLowerCase()
+        let search = req.query.search || ''
+        // const search = tolower.toLowerCase()
         const sortBy = req.query.sortBy || 'fullname'
         const sortType = req.query.sortType || 'asc'
-        const limit = parseInt(req.query.limit) || 7
+        const limit = parseInt(req.query.limit) || 100
         const page = parseInt(req.query.page) || 1
 
         try {

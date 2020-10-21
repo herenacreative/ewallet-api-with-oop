@@ -2,22 +2,21 @@ import Response from "../helpers/response";
 import transferModel from '../models/transfer';
 
 class TransferController{
-    // async getIdTransfer(req,res){
-    //     const id = req.params.id
-    //     try {
-    //         const result = await transferModel.getIdTransferModel(id);
-    //         return new Response(res, result, `Success Get All Transfer Data ID ${id}`, 200, 'success')
-    //     } catch (error) {
-    //         console.log(error);
-    //         return new Response(res, null, 'internal Server Error', 500, 'failed')
-    //     }
-    // }
+    async getAdminTransfer(req,res){
+        try {
+            const result = await transferModel.getAdminTransferModel();
+            return new Response(res, result, `Success Get All Transfer`, 200, 'success')
+        } catch (error) {
+            console.log(error);
+            return new Response(res, null, 'internal Server Error', 500, 'failed')
+        }
+    }
 
     async getAllTransfer(req,res){
         const sender_id = req.params.sender_id;
         const sortBy = req.query.sortBy || 'created_at'
         const sortType = req.query.sortType || 'desc'
-        const limit = parseInt(req.query.limit) || 4
+        const limit = parseInt(req.query.limit) || 50
         const page = parseInt(req.query.page) || 1
         
         try {
