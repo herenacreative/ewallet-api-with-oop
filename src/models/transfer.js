@@ -16,7 +16,7 @@ class TransferModel{
 
     getAdminTransferModel() {
         return new Promise((resolve, reject) => {
-            const sqlQuery = `SELECT t.id, t.sender_id, u.username as sender_name, t.receiver_id, u.username as sender_name, t.amount, t.notes, t.created_at FROM transfer as t INNER JOIN users as u ON u.id = t.sender_id`
+            const sqlQuery = `SELECT t.id, t.sender_id, u.username as sender_name, t.receiver_id, u.username as receiver_name, t.amount, t.notes, t.created_at FROM transfer as t INNER JOIN users as u ON u.id = t.sender_id`
             connection.query(sqlQuery, (error, result) => {
                 if (error) {
                     reject(error)
