@@ -20,6 +20,19 @@ class AuthRouter{
             '/login', 
             authController.login
         )
+        this.router.post(
+            '/reset-password',
+            authController.resetPassword
+        )
+        this.router.post(
+            '/request/otp',
+            authController.requestOTP
+        )
+        this.router.post(
+            '/confirm/otp',
+            authController.confirmOTP
+        )
+        
     }
 }
 

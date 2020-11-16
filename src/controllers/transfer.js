@@ -13,6 +13,9 @@ class TransferController{
     }
 
     async getAllTransfer(req,res){
+        // req.io.emit()
+        req.socket.emit('ko')
+        console.log(req.socket.emit('ko'), 'ko')
         const sender_id = req.params.sender_id;
         const sortBy = req.query.sortBy || 'created_at'
         const sortType = req.query.sortType || 'desc'

@@ -25,6 +25,18 @@ class UsersModel {
         })
     }
 
+    getEmailUserModel(email) {
+        return new Promise((resolve, reject) => {
+            const sqlQuery = 'SELECT * FROM users WHERE email = ?'
+            connection.query(sqlQuery, email, (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(result)
+            })
+        })
+    }
+
     patchUserModel(data, id) {
         return new Promise((resolve, reject) => {
             const sqlQuery = 'UPDATE users SET ? WHERE id = ?'
@@ -36,6 +48,18 @@ class UsersModel {
                     ...data,
                 };
                 resolve(newData);
+            })
+        })
+    }
+
+    updateData(data, id) {
+        return new Promise((resolve, reject) => {
+            const sqlQuery = 'UPDATE users SET ? WHERE id = ?'
+            connection.query(sqlQuery, [data, id], (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(result)
             })
         })
     }
