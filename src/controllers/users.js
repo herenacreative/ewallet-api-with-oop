@@ -10,7 +10,6 @@ class UsersController {
 
     async getAllUser(req, res) {
         let search = req.query.search || ''
-        // const search = tolower.toLowerCase()
         const sortBy = req.query.sortBy || 'fullname'
         const sortType = req.query.sortType || 'asc'
         const limit = parseInt(req.query.limit) || 100
@@ -18,7 +17,6 @@ class UsersController {
 
         try {
             const result = await UsersModel.getAllUserModel(search, sortBy, sortType, limit, page)
-            // console.log(result)
             if (result[0]) {
                 return new Response(res, result, 'Success Get All User Data', 200, 'success')
             } else {
@@ -31,6 +29,7 @@ class UsersController {
     }
 
     async getIdUser(req, res) {
+        // req.socket.emit
         const id = req.params.id
         try {
             const result = await UsersModel.getIdUserModel(id);
@@ -44,7 +43,28 @@ class UsersController {
         }
     }
 
+    async getTotalBalance(req, res) {
+        try {
+            const result = await UsersModel.getBalanceUserModel();
+            return new Response(res, result, `Success Get Total Balance`, 200, 'success')
+        } catch (error) {
+            console.log(error);
+            return new Response(res, null, 'internal Server Error', 500, 'failed')
+        }
+    }
+
+    async getTotalUsers(req, res) {
+        try {
+            const result = await UsersModel.getUserModel();
+            return new Response(res, result, `Success Get Total Users`, 200, 'success')
+        } catch (error) {
+            console.log(error);
+            return new Response(res, null, 'internal Server Error', 500, 'failed')
+        }
+    }
+
     async patchUser(req, res) {
+        console.log(req.DeleteImage, 'tes')
         const id = req.params.id
         const setData = {...req.body}
         if (req.file) {

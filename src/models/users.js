@@ -37,6 +37,30 @@ class UsersModel {
         })
     }
 
+    getBalanceUserModel() {
+        return new Promise((resolve, reject) => {
+            const sqlQuery = 'SELECT SUM(balance) AS total_balance FROM users'
+            connection.query(sqlQuery, (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(result)
+            })
+        })
+    }
+
+    getUserModel() {
+        return new Promise((resolve, reject) => {
+            const sqlQuery = 'SELECT SUM(verify) AS total_data FROM users'
+            connection.query(sqlQuery, (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(result)
+            })
+        })
+    }
+
     patchUserModel(data, id) {
         return new Promise((resolve, reject) => {
             const sqlQuery = 'UPDATE users SET ? WHERE id = ?'

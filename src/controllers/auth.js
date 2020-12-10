@@ -55,7 +55,7 @@ class AuthController {
             body.verify = req.body.verify || 0;
             body.balance = req.body.balance || 0;
             body.fullname = req.body.fullname || '-';
-
+            // body.photo = req.body.photo || `${ config.imageUrlPath(req) }avatar.png`;
             if (!body.photo) {
                 body.photo = req.file ? req.file.filename : `${config.imageUrlPath(req)}avatar.png`;
             }
@@ -126,6 +126,7 @@ class AuthController {
     async requestOTP(req, res) {
         try {
             const body = req.body;
+            console.log('object', body)
             totp.options = {
                 digits: 6,
                 step: 60 * 5

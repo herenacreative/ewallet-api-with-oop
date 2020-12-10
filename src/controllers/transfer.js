@@ -13,9 +13,7 @@ class TransferController{
     }
 
     async getAllTransfer(req,res){
-        // req.io.emit
-        req.socket.emit
-        console.log(req.socket.emit, 'ko')
+        // req.socket.emit
         const sender_id = req.params.sender_id;
         const sortBy = req.query.sortBy || 'created_at'
         const sortType = req.query.sortType || 'desc'
@@ -39,7 +37,7 @@ class TransferController{
         try {
             const result = await transferModel.postTransferModel(setData);
             req.socket.emit('message', result);
-            console.log(req.socket.emit('message', result))
+            console.log(req.socket.emit, 'test');
             return new Response(res, result, 'Success Post Transfer Data', 201, 'success')
         } catch (error) {
             console.log(error);
@@ -74,8 +72,6 @@ class TransferController{
                 return new Response(res, result, `Success Delete Transfer Data ID ${id}`, 201, 'success')
             }
             return new Response(res, null, `Data Not Found`, 404, 'failed')
-            // const result = await transferModel.deleteTransferModel(id)
-            // return new Response(res, result, `Success Delete Top Up Data ID ${id}`, 200, 'success')
         } catch (error) {
             console.log(error)
             return new Response(res, null, 'internal Server Error', 500, 'failed')

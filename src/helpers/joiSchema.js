@@ -17,7 +17,3 @@ export const registerSchema = {
 	photo: Joi.string(),
 	pin: Joi.number(),
 }
-
-// export const resetPasswordSchema = {
-// 	otp: Joi.number(),
-// }

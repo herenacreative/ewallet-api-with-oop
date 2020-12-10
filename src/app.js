@@ -6,11 +6,8 @@ import morgan from 'morgan';
 import routes from './routes/index.js';
 import config from './configs/server';
 import database from './helpers/mysql';
-// import {Server, Socket} from 'socket.io';
-// import {createServer} from 'http';
-import socketIO from 'socket.io';
-import http from 'http';
-import compression from 'compression';
+import {Server} from 'socket.io';
+import {createServer} from 'http';
 
 dotenv.config()
 class App {
@@ -22,16 +19,34 @@ class App {
         this.plugins();
         this.routes();
         this.error();
-        this.socket();
     }
 
     //membuat port
     init() {
-        const server = http.createServer(this.app);
+        const httpServer = createServer(this.app);
+        const io = new Server(httpServer);
         const port = process.env.PORT;
         this.app.setMaxListeners(0);
 
-        server.listen(port, () => {
+        io.on('connection', (socket) => {
+            console.log('a user connection socket')
+
+            socket.on('message', message => {
+                console.log(message)
+            });
+
+            socket.on('disconnect', () => {
+                console.log('a user disconnection')
+            })
+        })
+
+        this.app.use((res, req, next) => {
+            console.log(io, 'io', req)
+            req.io = io;
+            next()
+        })
+
+        httpServer.listen(port, () => {
             this.connectdb();
             console.log(`connected to the server on port ${port}`)
         })
@@ -47,7 +62,6 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json())
         this.app.use(morgan('dev'))
-        this.app.use(compression())
     }
 
     routes() {
@@ -78,35 +92,6 @@ class App {
             if (error) throw error;
             console.log("DB Connected!!!")
         });
-    }
-
-    socket() {
-        const server = http.createServer(this.app);
-        const io = socketIO(server);
-        // const server = createServer(this.app);
-        // const io = new Server(server);
-        // const Sockets = Socket()
-        // const io = socketIO(server)
-        console.log('a user connection 2', io.on)
-
-        io.on('connection', (socket) => {
-                // if (error) throw error;
-                console.log('a user connection')
-
-                socket.on('message', msg => {
-                    console.log(msg)
-                });
-
-                socket.on('disconnect', () => {
-                    console.log('a user disconnection')
-                })                
-            })
-
-        this.app.use((res, req, next) => {
-            console.log(io, 'io', req)
-            req.io = io;
-            next()
-        })
     }
 }
 

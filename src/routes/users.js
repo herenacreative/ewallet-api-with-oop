@@ -26,6 +26,18 @@ class UsersRouter{
             (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next),
             usersController.getIdUser
         )
+        this.router.get(
+            '/total/balance',
+            (req, res, next) => this.auth.verifyJwtToken(req, res, next),
+            (req, res, next) => this.auth.checkRole([1, 2])(req, res, next),
+            usersController.getTotalBalance
+        )
+        this.router.get(
+            '/total/person',
+            (req, res, next) => this.auth.verifyJwtToken(req, res, next),
+            (req, res, next) => this.auth.checkRole([1, 2])(req, res, next),
+            usersController.getTotalUsers
+        )
         this.router.patch(
             '/:id', 
             upload.single('photo'), 

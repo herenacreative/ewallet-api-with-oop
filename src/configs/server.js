@@ -13,7 +13,6 @@ const config = {
     jwtTokenRefreshLifeTime: "7d",
     rootProjectPath: "saku-saku",
     imageUrlPath: (req) => {
-        // console.log(req.this.rootProjectPath, 'object')
         return `${req.protocol}://${req.get("host")}/saku-saku/images/`;
     }
 }
