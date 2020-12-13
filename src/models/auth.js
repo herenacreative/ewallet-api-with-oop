@@ -6,7 +6,6 @@ class AuthModel {
         return new Promise((resolve, reject) => {
             const sqlQuery = 'INSERT INTO users SET ?'
             connection.query(sqlQuery, data, (error, result) => {
-                console.log(error, 'e', result)
                 if (error) {
                     reject(error)
                 }

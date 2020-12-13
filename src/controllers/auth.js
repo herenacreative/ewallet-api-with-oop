@@ -126,7 +126,6 @@ class AuthController {
     async requestOTP(req, res) {
         try {
             const body = req.body;
-            console.log('object', body)
             totp.options = {
                 digits: 6,
                 step: 60 * 5

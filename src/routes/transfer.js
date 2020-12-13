@@ -20,6 +20,12 @@ class TransferRouter{
             transferController.getAdminTransfer
         )
         this.router.get(
+            '/detail/:id',
+            (req, res, next) => this.auth.verifyJwtToken(req, res, next),
+            (req, res, next) => this.auth.checkRole([1, 2, 3])(req, res, next),
+            transferController.getIdTransfer
+        )
+        this.router.get(
             '/:sender_id', 
             (req, res, next) => this.auth.verifyJwtToken(req, res, next), 
             (req, res, next) => this.auth.checkRole([1,2,3])(req, res, next), 

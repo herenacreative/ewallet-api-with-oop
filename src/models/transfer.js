@@ -58,7 +58,6 @@ class TransferModel{
         return new Promise((resolve, reject) => {
             const sql ='UPDATE transfer SET ? WHERE id = ?'
             connection.query(sql, [setData, id], (err, result) => {
-                console.log(result)
                 if (err) {
                     reject(err)
                 }

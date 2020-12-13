@@ -41,7 +41,6 @@ class App {
         })
 
         this.app.use((res, req, next) => {
-            console.log(io, 'io', req)
             req.io = io;
             next()
         })

@@ -64,7 +64,6 @@ class UsersController {
     }
 
     async patchUser(req, res) {
-        console.log(req.DeleteImage, 'tes')
         const id = req.params.id
         const setData = {...req.body}
         if (req.file) {

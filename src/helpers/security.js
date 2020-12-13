@@ -13,7 +13,7 @@ export const comparePassword = (password1, password2) => {
 }
 
 export const createToken = function(payload, expire) {
-    console.log(expire)
+    // console.log(expire)
     if (expire) {
         return jwt.sign(payload, config.jwtSecretKey, expire)
     };

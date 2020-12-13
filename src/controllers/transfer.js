@@ -12,6 +12,17 @@ class TransferController{
         }
     }
 
+    async getIdTransfer(req, res) {
+        const id = req.params.id
+        try {
+            const result = await transferModel.getIdTransferModel(id);
+            return new Response(res, result, `Success Get All Transfer`, 200, 'success')
+        } catch (error) {
+            console.log(error);
+            return new Response(res, null, 'internal Server Error', 500, 'failed')
+        }
+    }
+
     async getAllTransfer(req,res){
         // req.socket.emit
         const sender_id = req.params.sender_id;
@@ -37,7 +48,6 @@ class TransferController{
         try {
             const result = await transferModel.postTransferModel(setData);
             req.socket.emit('message', result);
-            console.log(req.socket.emit, 'test');
             return new Response(res, result, 'Success Post Transfer Data', 201, 'success')
         } catch (error) {
             console.log(error);
