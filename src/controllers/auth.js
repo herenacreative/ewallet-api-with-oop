@@ -57,7 +57,7 @@ class AuthController {
             body.fullname = req.body.fullname || '-';
             // body.photo = req.body.photo || `${ config.imageUrlPath(req) }avatar.png`;
             if (!body.photo) {
-                body.photo = req.file ? req.file.filename : `${config.imageUrlPath(req)}avatar.png`;
+                body.photo = req.file ? req.file.filename : `avatar.png`;
             }
 
             await new FormValidation(registerSchema, body);
